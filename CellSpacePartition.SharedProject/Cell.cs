@@ -1,6 +1,4 @@
-using Microsoft.Xna.Framework;
-using System.Collections.Generic;
-using PrimitiveBuddy;
+using Stride.Core.Mathematics;
 
 namespace CellSpacePartitionLib
 {
@@ -19,7 +17,7 @@ namespace CellSpacePartitionLib
 		/// <summary>
 		/// the cell's bounding box
 		/// </summary>
-		public RectangleFLib.RectangleF BBox { get; private set; }
+		public RectangleF BBox { get; private set; }
 
 		#endregion //Members
 
@@ -30,7 +28,7 @@ namespace CellSpacePartitionLib
 		/// </summary>
 		/// <param name="topleft"></param>
 		/// <param name="botright"></param>
-		public Cell(RectangleFLib.RectangleF area)
+		public Cell(RectangleF area)
 		{
 			Items = new List<T>();
 			BBox = area;
@@ -39,10 +37,10 @@ namespace CellSpacePartitionLib
 		/// <summary>
 		/// call this to render the cell edges
 		/// </summary>
-		public void RenderCell(IPrimitive primitive, Color color)
-		{
-			primitive.Rectangle(BBox, color);
-		}
+		//public void RenderCell(IPrimitive primitive, Color color)
+		//{
+		//	primitive.Rectangle(BBox, color);
+		//}
 
 		#endregion //Methods
 	}

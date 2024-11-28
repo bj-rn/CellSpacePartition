@@ -1,12 +1,11 @@
-﻿using Microsoft.Xna.Framework;
-using PrimitiveBuddy;
-using System.Collections.Generic;
+﻿using Stride.Core.Mathematics;
+
 
 namespace CellSpacePartitionLib
 {
 	public interface IPartition<T> where T : IMovingEntity
 	{
-		RectangleFLib.RectangleF CellSpace { get; }
+		RectangleF CellSpace { get; }
 
 		void Add(T ent);
 
@@ -20,8 +19,8 @@ namespace CellSpacePartitionLib
 
 		void Clear();
 
-		void RenderCells(IPrimitive primitive);
+		// void RenderCells(IPrimitive primitive);
 
-		void RenderCellIntersections(IPrimitive primitive, Vector2 targetPos, float queryRadius, Color color);
+		// void RenderCellIntersections(IPrimitive primitive, Vector2 targetPos, float queryRadius, Color color);
 	}
 }

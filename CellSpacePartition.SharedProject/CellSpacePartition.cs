@@ -1,7 +1,4 @@
-using Microsoft.Xna.Framework;
-using PrimitiveBuddy;
-using System;
-using System.Collections.Generic;
+using Stride.Core.Mathematics;
 
 namespace CellSpacePartitionLib
 {
@@ -30,9 +27,9 @@ namespace CellSpacePartitionLib
 		/// <summary>
 		/// the number of cells the space is going to be divided up into
 		/// </summary>
-		protected Point NumCells { get; set; }
+		protected Int2 NumCells { get; set; }
 
-		public RectangleFLib.RectangleF CellSpace { get; protected set; }
+		public RectangleF CellSpace { get; protected set; }
 
 		#endregion //Properties
 
@@ -48,10 +45,10 @@ namespace CellSpacePartitionLib
 		{
 			Cells = new List<Cell<T>>();
 
-			NumCells = new Point(cellsX, cellsY);
+			NumCells = new Int2(cellsX, cellsY);
 
-			var worldSize = NumCells.ToVector2() * cellsize;
-			CellSpace = new RectangleFLib.RectangleF(origin.X, origin.Y, worldSize.X, worldSize.Y);
+			var worldSize = (Vector2)NumCells * cellsize;
+			CellSpace = new RectangleF(origin.X, origin.Y, worldSize.X, worldSize.Y);
 
 			//create the cells
 			for (var y = 0; y < NumCells.Y; ++y)
@@ -61,7 +58,7 @@ namespace CellSpacePartitionLib
 					var left = origin.X + x * cellsize;
 					var top = origin.Y + y * cellsize;
 
-					Cells.Add(new Cell<T>(new RectangleFLib.RectangleF(left, top, cellsize, cellsize)));
+					Cells.Add(new Cell<T>(new RectangleF(left, top, cellsize, cellsize)));
 				}
 			}
 
@@ -225,11 +222,11 @@ namespace CellSpacePartitionLib
 		/// <param name="targetPos"></param>
 		/// <param name="queryRadius"></param>
 		/// <returns></returns>
-		protected RectangleFLib.RectangleF CreateQueryBox(Vector2 targetPos, float queryRadius)
+		protected RectangleF CreateQueryBox(Vector2 targetPos, float queryRadius)
 		{
 			var upLeft = targetPos - new Vector2(queryRadius, queryRadius);
 			var radius2 = queryRadius * 2f;
-			return new RectangleFLib.RectangleF(upLeft.X, upLeft.Y, radius2, radius2);
+			return new RectangleF(upLeft.X, upLeft.Y, radius2, radius2);
 		}
 
 		/// <summary>
@@ -287,29 +284,29 @@ namespace CellSpacePartitionLib
 		/// call this to render the cell edges
 		/// </summary>
 		/// <param name="primitive"></param>
-		public void RenderCells(IPrimitive primitive)
-		{
-			foreach (var cell in Cells)
-			{
-				cell.RenderCell(primitive, Color.White);
-			}
-		}
+		//public void RenderCells(IPrimitive primitive)
+		//{
+		//	foreach (var cell in Cells)
+		//	{
+		//		cell.RenderCell(primitive, Color.White);
+		//	}
+		//}
 
-		public void RenderCellIntersections(IPrimitive primitive, Vector2 targetPos, float queryRadius, Color color)
-		{
-			var queryBox = CreateQueryBox(targetPos, queryRadius);
+		//public void RenderCellIntersections(IPrimitive primitive, Vector2 targetPos, float queryRadius, Color color)
+		//{
+		//	var queryBox = CreateQueryBox(targetPos, queryRadius);
 
-			//iterate through each cell and test to see if its bounding box overlaps with the query box. 
-			for (var i = 0; i < Cells.Count; i++)
-			{
-				//test to see if this cell contains members and if it overlaps the query box
-				if (Cells[i].BBox.Intersects(queryBox))
-				{
-					//draw the cell
-					Cells[i].RenderCell(primitive, color);
-				}
-			}
-		}
+		//	//iterate through each cell and test to see if its bounding box overlaps with the query box. 
+		//	for (var i = 0; i < Cells.Count; i++)
+		//	{
+		//		//test to see if this cell contains members and if it overlaps the query box
+		//		if (Cells[i].BBox.Intersects(queryBox))
+		//		{
+		//			//draw the cell
+		//			Cells[i].RenderCell(primitive, color);
+		//		}
+		//	}
+		//}
 
 		#endregion //Debug Rendering
 
